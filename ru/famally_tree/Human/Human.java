@@ -1,4 +1,4 @@
-package ru.famally_tree;
+package ru.famally_tree.Human;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -6,7 +6,7 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Human implements Serializable{
+public  class Human implements Serializable, Comparable<Human> {
     private long id;
     private String name;
     private Gender gender;
@@ -17,7 +17,7 @@ public  class Human implements Serializable{
     private List<Human> children;
     private Human spouse;
 
-    public Human(String name, Gender gender, LocalDate birth,LocalDate dead,Human father,Human mother){
+    public Human(String name, Gender gender, LocalDate birth,LocalDate dead,Human father,Human mother,Human spouse){
         id = -1;
         this.name = name;
         this.gender = gender;
@@ -26,14 +26,16 @@ public  class Human implements Serializable{
         this.mother = mother;
         this.father = father;
         children = new ArrayList<>();
+        this.spouse = spouse;
+
     }
 
     public Human(String name, Gender gender, LocalDate birth){
-        this(name,gender,birth,null,null,null);
+        this(name,gender,birth,null,null,null,null);
     }
 
     public Human(String name, Gender gender, LocalDate birth, Human mother, Human father){
-        this(name, gender,birth,null,father,mother);
+        this(name, gender,birth,null,father,mother,null);
     }
 
     public boolean addChildren(Human child){
@@ -217,6 +219,8 @@ public  class Human implements Serializable{
         return res.toString();
     }
 
+
+
     @Override
     public boolean equals(Object obj) {
         if(this == obj){
@@ -227,5 +231,10 @@ public  class Human implements Serializable{
         }
         Human human =(Human) obj;
         return human.getId() == getId();
+    }
+
+    @Override
+    public int compareTo(Human o) {
+        return this.name.compareTo(o.name);
     }
 }

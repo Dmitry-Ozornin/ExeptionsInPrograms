@@ -1,4 +1,4 @@
-package ru.famally_tree;
+package ru.famally_tree.Human;
 
 public enum Gender {
     Male , Famale

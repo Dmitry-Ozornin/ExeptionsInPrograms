@@ -1,8 +1,8 @@
-package ru.famally_tree;
+package ru.famally_tree.Filehandler;
 
 import java.io.*;
 
-public class FileHandler implements Writer{
+public class FileHandler implements Writer {
 
     private String filePath = "C://work/oop2/ru/famally_tree/treeFile.out";
 

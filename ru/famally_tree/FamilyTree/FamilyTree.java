@@ -1,10 +1,14 @@
-package ru.famally_tree;
+package ru.famally_tree.FamilyTree;
+
+import ru.famally_tree.Human.Human;
+import ru.famally_tree.Human.SortByAgeComporator;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FamilyTree implements Serializable {
@@ -144,6 +148,14 @@ public class FamilyTree implements Serializable {
 
     }
 
+    public void sortByAge(){
+        humans.sort(new SortByAgeComporator());
+    }
+
+    public void sortByName(){
+        Collections.sort(humans);
+    }
+
 
     @Override
     public String toString() {
@@ -162,6 +174,7 @@ public class FamilyTree implements Serializable {
         return sb.toString();
 
     }
+
 
 
 }
