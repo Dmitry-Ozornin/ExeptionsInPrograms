@@ -1,5 +1,5 @@
 package ru.famally_tree.Human;
 
-public enum Gender {
+public enum Gender  {
     Male , Famale
 }

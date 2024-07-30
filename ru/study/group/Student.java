@@ -1,6 +1,6 @@
 package ru.study.group;
 
-public class Student implements Comparable<Student>{
+public class Student implements Comparable<Student>, ItemStudyGroup{
 
     private int id;
     private String name;
@@ -14,6 +14,11 @@ public class Student implements Comparable<Student>{
 
     public int getAge() {
         return age;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

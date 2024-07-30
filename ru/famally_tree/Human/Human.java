@@ -1,12 +1,14 @@
 package ru.famally_tree.Human;
 
+import ru.famally_tree.FamilyTree.ItemFamalyTree;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
-public  class Human implements Serializable, Comparable<Human> {
+public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
     private long id;
     private String name;
     private Gender gender;

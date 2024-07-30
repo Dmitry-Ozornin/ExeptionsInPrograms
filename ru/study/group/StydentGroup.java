@@ -2,8 +2,8 @@ package ru.study.group;
 
 import java.util.*;
 
-public class StydentGroup implements Iterable<Student> {
-    private List<Student> students;
+public class StydentGroup<E extends ItemStudyGroup> implements Iterable<E> {
+    private List<E> students;
 
 
     public StydentGroup() {
@@ -11,22 +11,22 @@ public class StydentGroup implements Iterable<Student> {
         students = new ArrayList<>();
     }
 
-    public void addStydent(Student student){
+    public void addStydent(E student){
 
         students.add(student);
     }
 
     public void sortByName(){
-        Collections.sort(students);
+        students.sort(new StudentComparateByName<>());
     }
 
     public void sortByAge(){
-        students.sort(new StudentComporatorByAge());
+        students.sort(new StudentComporatorByAge<>());
     }
 
     @Override
-    public Iterator<Student> iterator() {
-        return new StudentIterator(students);
+    public Iterator<E> iterator() {
+        return new StudentIterator<>(students);
     }
 
 

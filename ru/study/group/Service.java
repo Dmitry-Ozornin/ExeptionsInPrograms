@@ -3,7 +3,7 @@ package ru.study.group;
 import java.util.Collections;
 
 public class Service {
-    private StydentGroup stydentGroup;
+    private StydentGroup<Student> stydentGroup;
     private StudentBuilder studentBuilder;
 
     public Service(){
@@ -31,7 +31,9 @@ public class Service {
         stydentGroup.sortByName();
     }
 
-    public void sortByAge(){
+    public void sortByAge(){;
         stydentGroup.sortByAge();
     }
+
+
 }
