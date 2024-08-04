@@ -14,6 +14,8 @@ public class Main {
         System.out.println(service.getStudentsListInfo());
         service.sortByAge();
         System.out.println(service.getStudentsListInfo());
+        View view = new Console();
+        view.start();
 
     }
 
