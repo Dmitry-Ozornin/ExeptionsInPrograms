@@ -20,7 +20,7 @@ public class Presenter {
 
 
 
-    public void addHumans(String name, Gender gender, LocalDate birth) {
+    public void addHuman(String name, Gender gender, LocalDate birth) {
         serviceFamaly.addHumans(name,gender,birth);
         getHumanList();
     }

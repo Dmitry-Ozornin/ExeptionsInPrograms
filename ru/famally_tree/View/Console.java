@@ -75,7 +75,7 @@ public class Console implements View{
         LocalDate birthData = input.getBirthInput();
 
 
-        presenter.addHumans(name, Gender.valueOf(genderStr),birthData);
+        presenter.addHuman(name, Gender.valueOf(genderStr),birthData);
     }
 
     public void getHumanListInfo(){
