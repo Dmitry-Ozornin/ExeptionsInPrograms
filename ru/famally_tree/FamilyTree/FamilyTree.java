@@ -1,6 +1,5 @@
 package ru.famally_tree.FamilyTree;
 
-import ru.famally_tree.Human.Human;
 import ru.famally_tree.Human.SortByAgeComporator;
 import ru.famally_tree.Human.SortByNameComparator;
 
@@ -9,14 +8,13 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
 public class FamilyTree<E extends ItemFamalyTree<E>> implements Serializable, Iterable<E> {
 
     private List<E> humans;
-    private long humansId;
+    private int humansId;
 
     public FamilyTree() {
         this(new ArrayList<>());
@@ -43,13 +41,13 @@ public class FamilyTree<E extends ItemFamalyTree<E>> implements Serializable, It
         return false;
     }
 
-    private void addToParent(E human) {
+    public void addToParent(E human) {
         for (E parent : human.getParents()) {
             parent.addChildren(human);
         }
     }
 
-    private void addToChildren(E human) {
+    public void addToChildren(E human) {
         for (E child : human.getChildren()) {
             child.addParent(human);
         }

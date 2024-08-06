@@ -2,14 +2,13 @@ package ru.famally_tree.Human;
 
 import ru.famally_tree.FamilyTree.ItemFamalyTree;
 
-import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
 public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
-    private long id;
+    private int id;
     private String name;
     private Gender gender;
     private LocalDate birth;
@@ -18,6 +17,7 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
     private Human mother;
     private List<Human> children;
     private Human spouse;
+    private HumanAdd humanAdd;
 
     public Human(String name, Gender gender, LocalDate birth,LocalDate dead,Human father,Human mother,Human spouse){
         id = -1;
@@ -29,6 +29,7 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
         this.father = father;
         children = new ArrayList<>();
         this.spouse = spouse;
+        this.humanAdd = new HumanAdd(this);
 
     }
 
@@ -41,22 +42,21 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
     }
 
     public boolean addChildren(Human child){
-        if(!children.contains(child)){
-            children.add(child);
-            return true;
-        }
-        return false;
+        return humanAdd.addChildren(child);
     }
 
-    public boolean addParent(Human parent){
-        if(parent.getGender().equals(Gender.Male)){
-            setFather(parent);
-        }
-        if(parent.getGender().equals(Gender.Famale)){
-            setMother(parent);
-        }
-        return true;
+    public void setChildren(List<Human> children) {
+        this.children = children;
     }
+
+
+    public boolean addParent(Human parent){
+        return humanAdd.addParent(parent);
+    }
+
+
+
+
 
     public void setGender(Gender gender){
         this.gender = gender;
@@ -82,14 +82,7 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
     }
 
     public List<Human> getParents(){
-        List<Human> list = new ArrayList<>();
-        if(father != null){
-            list.add(father);
-        }
-        if (mother != null){
-            list.add(mother);
-        }
-        return list;
+        return humanAdd.getParents();
     }
 
     public int getAge(){
@@ -99,6 +92,7 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
             return getPeriod(birth, dead);
         }
     }
+
 
     public int getPeriod(LocalDate birth, LocalDate dead){
         Period diff = Period.between(birth,dead);
@@ -116,11 +110,11 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
         return name;
     }
 
-    public long getId(){
+    public int getId(){
         return id;
     }
 
-    public void setId(long id){
+    public void setId(int id){
         this.id = id;
     }
 
@@ -128,8 +122,16 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
         return birth;
     }
 
+    public void setBirth(LocalDate birth) {
+        this.birth = birth;
+    }
+
     public LocalDate getDead(){
         return dead;
+    }
+
+    public void setDead(LocalDate dead) {
+        this.dead = dead;
     }
 
     public List<Human> getChildren(){
@@ -150,78 +152,8 @@ public  class Human implements Comparable<Human>, ItemFamalyTree<Human> {
 
     @Override
     public String toString() {
-        return getInfo();
+        return new HumanFormat(this).getInfo();
     }
-
-    public String getInfo(){
-        StringBuilder sb = new StringBuilder();
-        sb.append("id: ");
-        sb.append(id);
-        sb.append(", name: ");
-        sb.append(name);
-        sb.append(", gender: ");
-        sb.append(getGender());
-        sb.append(", age: ");
-        sb.append(getAge());
-        sb.append(", ");
-        sb.append(getSpouseInfo());
-        sb.append(", ");
-        sb.append(getMotherInfo());
-        sb.append(", ");
-        sb.append(getFatherInfo());
-        sb.append(", ");
-        sb.append(getChildrenInfo());
-        return  sb.toString();
-    }
-
-    public String getSpouseInfo(){
-        String res = "spouse: ";
-        if(spouse == null){
-            res+= "no";
-        } else {
-            res += spouse.getName();
-        }
-        return res;
-    }
-
-    public String getMotherInfo(){
-        String res = "mother: ";
-        Human mother = getMother();
-        if(mother != null){
-            res += mother.getName();
-        } else {
-            res += "no";
-        }
-        return res;
-    }
-
-    public String getFatherInfo(){
-        String res = "father: ";
-        Human father = getFather();
-        if(father != null){
-            res += father.getName();
-        } else {
-            res += "no";
-        }
-        return res;
-    }
-
-    public String getChildrenInfo(){
-        StringBuilder res = new StringBuilder();
-        res.append("child: ");
-        if(children.size() != 0){
-            res.append(children.get(0).getName());
-            for (int i = 1; i < children.size() ; i++) {
-                res.append(", ");
-                res.append(children.get(i).getName());
-            }
-        }else {
-            res.append("no");
-        }
-        return res.toString();
-    }
-
-
 
     @Override
     public boolean equals(Object obj) {
