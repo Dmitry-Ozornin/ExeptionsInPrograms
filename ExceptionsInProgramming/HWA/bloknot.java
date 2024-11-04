@@ -87,6 +87,9 @@ public class bloknot {
         String nameFile = lastName + ".txt";
         String information = String.format("%s %s %s %s %d %s",lastName,firstName,patronymic,birthday,phone,gender);
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(nameFile,true))){
+            // пытался сделать чтобы сохранял в определеную директорию кросплатформенно, но не получалось. Если
+            // посоветуете что можно почитать про такое более разборчиво и понятно или же как это сделать буду
+            // благодарен.
 
                 bufferedWriter.write(information);
                 bufferedWriter.newLine();
