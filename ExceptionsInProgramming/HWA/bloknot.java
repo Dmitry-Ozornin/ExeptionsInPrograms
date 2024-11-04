@@ -1,5 +1,8 @@
 package HWA;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -11,7 +14,7 @@ public class bloknot {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите ЧЕРЕЗ ПРОБЕЛ Фамилию, Имя , Отчество, дату рождения в формате день.месяц.год(вводим числа через точку), номер телефона (целым числом без пробела и +), пол человека");
         String string = scanner.nextLine();
-//        try {
+        try {
         String[] data = string.split(" ");
         if (data.length != 6) {
             throw new IllegalArgumentException("Некорректный ввод, запустите программу заного и введите согласно требованиям данные!");
@@ -22,19 +25,22 @@ public class bloknot {
         LocalDate birthday = parseData(data[3]);
         long phone = parsePhone(data[4]);
         String gender = parseGender(data[5]);
+        writeFile(lastName,firstName,patronymic,birthday,phone,gender);
 
 
         System.out.println(gender);
-//        }
+        } catch (DateTimeParseException e){
+            System.err.println("Неверный формат ввода даты рождения");
+        } catch (IllegalArgumentException e){
+            System.err.println(e.getMessage());
+        }
     }
 
-    public static LocalDate parseData(String datastr) throws DateTimeParseException  {
+    public static LocalDate parseData(String datastr) throws DateTimeParseException {
 
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
-    LocalDate birthday = LocalDate.parse(datastr, formatter);
-    return birthday;
-
-
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+        LocalDate birthday = LocalDate.parse(datastr, formatter);
+        return birthday;
 
 
     }
@@ -45,13 +51,13 @@ public class bloknot {
 
             return i;
 
-        } catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException("Невернный ввод номера теолефона");
         }
         //Пытался через инт , но как бы не обраватвал и Integer.parseInt(phone) и Integer.parseInt(phone.trim()) все равно выдавал ошибку. Буду благодарен, если напишете почему так не работает, не понял почему так не переводит. Заране благодарю
     }
 
-    public static String parseGender(String genderstr){
+    public static String parseGender(String genderstr) {
         String gender1 = "m";
         String gender2 = "f";
         String gender3 = "мужчина";
@@ -72,6 +78,20 @@ public class bloknot {
             }
 
 
+        }
+
+
+    }
+    public static void writeFile (String lastName, String firstName, String patronymic, LocalDate birthday,
+                                   long phone, String gender){
+        String nameFile = lastName + ".txt";
+        String information = String.format("%s %s %s %s %d %s",lastName,firstName,patronymic,birthday,phone,gender);
+        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(nameFile,true))){
+
+                bufferedWriter.write(information);
+                bufferedWriter.newLine();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
